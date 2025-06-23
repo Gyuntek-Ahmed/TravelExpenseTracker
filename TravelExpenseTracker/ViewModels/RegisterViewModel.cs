@@ -4,8 +4,11 @@ using TravelExpenseTracker.Pages;
 
 namespace TravelExpenseTracker.ViewModels
 {
-    public partial class LoginViewModel : ObservableObject
+    public partial class RegisterViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private string _name;
+
         [ObservableProperty]
         private string _email;
 
@@ -13,7 +16,7 @@ namespace TravelExpenseTracker.ViewModels
         private string _password;
 
         [RelayCommand]
-        private async Task NavigateToRegisterAsync()
-            => await Shell.Current.GoToAsync(nameof(RegisterPage));
+        private async Task NavigateBackAsync()
+            => await Shell.Current.GoToAsync("..");
     }
 }
