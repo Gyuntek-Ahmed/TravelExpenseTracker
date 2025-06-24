@@ -7,27 +7,16 @@
              x:DataType="vm:LoginViewModel"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label" x:Key="appName">
-                <Setter Property="FontSize" Value="28" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <Grid RowDefinitions="Auto, Auto, Auto, *"
+          Margin="0, 30, 0, 0"
           RowSpacing="15">
         <VerticalStackLayout Grid.Row="0"
-                             Margin="0,50,0,0"
-                             HorizontalOptions="Center">
-            <Label Style="{StaticResource appName}"
-                   Text="Пътуване" />
-            <Label Style="{StaticResource appName}"
-                   Text="Разходи" />
-            <Label Style="{StaticResource appName}"
-                   Text="Проследяване" />
+                 HorizontalOptions="Center">
+            <dx:DXImage Source="logo.png" MaximumHeightRequest="170" />
+            <Label Style="{StaticResource labelStyle}"
+           Text="Проследяване на" />
+            <Label Style="{StaticResource labelStyle}"
+           Text="Пътни Разходи" />
         </VerticalStackLayout>
 
         <Label Grid.Row="1"
@@ -39,13 +28,9 @@
                              Spacing="20"
                              Padding="25">
             <dx:TextEdit PlaceholderText="Email"/>
-            <dx:PasswordEdit PlaceholderText="Password"
-                             IconColor="{dx:ThemeColor Primary}"
+            <dx:PasswordEdit PlaceholderText="Парола"
                              ErrorText="Невалидна Парола!"/>
-            <dx:DXButton Content="Вход"
-                         WidthRequest="250"
-                         FontSize="20"
-                         FontAttributes="Bold"/>
+            <dx:DXButton Content="Вход" />
             <Label Text="Нямате акаунт? Регистрирайте се"
                    FontSize="18"
                    HorizontalOptions="Center"
