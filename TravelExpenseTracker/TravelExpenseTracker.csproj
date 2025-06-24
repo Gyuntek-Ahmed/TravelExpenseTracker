@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>Проследяване На Пътни Разходи</ApplicationTitle>
+		<ApplicationTitle>Мениджър Пътни Разходи</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.travelexpensetracker</ApplicationId>
@@ -70,7 +70,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Controls\" />
-	  <Folder Include="Models\" />
 	</ItemGroup>
 
 	<ItemGroup>

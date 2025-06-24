@@ -30,7 +30,8 @@
             <dx:TextEdit PlaceholderText="Email"/>
             <dx:PasswordEdit PlaceholderText="Парола"
                              ErrorText="Невалидна Парола!"/>
-            <dx:DXButton Content="Регистрация" />
+            <dx:DXButton Content="Регистрация"
+                         Style="{StaticResource logRegBtnStyle}"/>
             <Label Text="Имате акаунт? Вход"
                    FontSize="18"
                    HorizontalOptions="Center"

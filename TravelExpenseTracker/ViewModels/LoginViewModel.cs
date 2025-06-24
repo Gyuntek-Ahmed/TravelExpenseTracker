@@ -15,5 +15,15 @@ namespace TravelExpenseTracker.ViewModels
         [RelayCommand]
         private async Task NavigateToRegisterAsync()
             => await Shell.Current.GoToAsync(nameof(RegisterPage));
+
+        [RelayCommand]
+        private async Task LoginAsync()
+        {
+            // Login Validation
+            // Call the API
+            // Redirect to Home/Main page
+
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+        }
     }
 }
