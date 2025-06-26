@@ -6,8 +6,6 @@
              xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
              xmlns:model="clr-namespace:TravelExpenseTracker.Models"
              BackgroundColor="{dx:ThemeColor Surface}"
-             Shell.BackgroundColor="{dx:ThemeColor PrimaryContainer}"
-             Shell.TitleColor="{dx:ThemeColor Primary}"
              Title="Управление На Пътни Разходи"
              x:DataType="vm:HomeViewModel">
 

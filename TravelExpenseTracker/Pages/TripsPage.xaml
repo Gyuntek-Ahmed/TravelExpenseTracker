@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             x:Class="TravelExpenseTracker.Pages.TripsPage"
+             xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
+             xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             BackgroundColor="{dx:ThemeColor Surface}"
+             Title="Екскурзии"
+             x:DataType="vm:TripsViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="plus.png"
+                     Command="{Binding AddTripTempCommand}"/>
+    </ContentPage.ToolbarItems>
+    <CollectionView ItemsSource="{Binding Trips}"
+                    Margin="15">
+        <CollectionView.EmptyView>
+            <VerticalStackLayout HorizontalOptions="Center"
+                         Padding="25"
+                         Margin="0,300,0,0"
+                         Spacing="15">
+                <Label Text="Все още няма пътувания"
+               FontSize="25"
+               TextColor="DarkGray"/>
+                <dx:DXButton Grid.Column="2"
+                     WidthRequest="150"
+                     Style="{StaticResource btnSm}"
+                     Content="+  Добави Пътуване"
+                     Command="{Binding AddTripTempCommand}"
+                     VerticalOptions="Start"
+                     HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </CollectionView.EmptyView>
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout ItemSpacing="15"
+                               Orientation="Vertical" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:TripModel">
+                <Border BackgroundColor="{dx:ThemeColor Surface}"
+                        StrokeShape="RoundRectangle 15"
+                        Padding="10"
+                        StrokeThickness="0">
+                    <Grid ColumnDefinitions="120, 1, *"
+                          ColumnSpacing="5">
+                        <dx:DXImage Grid.Column="0"
+                                    Source="{Binding Image}"
+                                    WidthRequest="120"/>
+                        <BoxView Grid.Column="1"
+                                 WidthRequest="0.5"
+                                 BackgroundColor="LightGray"/>
+                        <Grid Grid.Column="2"
+                              RowDefinitions="Auto, *, Auto">
+                            <Grid Grid.Row="0"
+                                  ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0"
+                                       Text="{Binding Title}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"/>
+                                <Border Grid.Column="1"
+                                        BackgroundColor="Green"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="0"
+                                        Padding="10,2"
+                                        HeightRequest="20">
+                                    <Label Text="Планирано"
+                                           TextColor="White"
+                                           FontSize="10"/>
+                                </Border>
+                            </Grid>
+                            <HorizontalStackLayout Grid.Row="1"
+                                                   Spacing="3">
+                                <dx:DXImage Source="location.png"
+                                            VerticalOptions="Center"
+                                            HeightRequest="18"/>
+                                <Label VerticalOptions="Center"
+                                       Text="{Binding Location}" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="2"
+                                                   Spacing="3">
+                                <dx:DXImage Source="calendar.png"
+                                            HeightRequest="18"
+                                            VerticalOptions="Center"/>
+                                <Label Grid.Row="2"
+                                       VerticalOptions="Center"
+                                       Text="20.06.2025 - 26.06.2025" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

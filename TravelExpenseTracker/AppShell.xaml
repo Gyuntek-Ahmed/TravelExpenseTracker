@@ -10,6 +10,9 @@
     Shell.FlyoutBehavior="Disabled"
     Shell.TabBarBackgroundColor="{dx:ThemeColor PrimaryContainer}"
     Shell.TabBarForegroundColor="{dx:ThemeColor Primary}"
+    Shell.BackgroundColor="{dx:ThemeColor PrimaryContainer}"
+    Shell.TitleColor="{dx:ThemeColor Primary}"
+    Shell.ForegroundColor="{dx:ThemeColor Primary}"
     Shell.NavBarHasShadow="True"
     Title="Мениджър Пътни Разходи">
 
@@ -30,9 +33,9 @@
             Route="MainPage" />
         <ShellContent
             Title="Екскурзии"
-            ContentTemplate="{DataTemplate pages:MainPage}"
+            ContentTemplate="{DataTemplate pages:TripsPage}"
             Icon="book_open.png"
-            Route="MainPage1" />
+            Route="TripsPage" />
         <ShellContent
             Title="Нова Екскурзия"
             ContentTemplate="{DataTemplate pages:MainPage}"
