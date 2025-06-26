@@ -49,6 +49,10 @@ namespace TravelExpenseTracker
                 .Services
                 .AddSingleton<TripsViewModel>()
                 .AddSingleton<TripsPage>();
+            builder
+                .Services
+                .AddSingleton<SettingsViewModel>()
+                .AddSingleton<SettingsPage>();
 
             return builder.Build();
         }

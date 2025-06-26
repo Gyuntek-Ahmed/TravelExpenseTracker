@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TravelExpenseTracker.Pages.SettingsPage"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
+             xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             BackgroundColor="{dx:ThemeColor Surface}"
+             x:DataType="vm:SettingsViewModel"
+             Title="Настройки">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="15">
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="5">
+            <Border BackgroundColor="{dx:ThemeColor Primary}"
+                    HeightRequest="80"
+                    WidthRequest="80"
+                    StrokeShape="RoundRectangle 40"
+                    StrokeThickness="5">
+                <Border.Shadow>
+                    <Shadow/>
+                </Border.Shadow>
+                <Label Text="{Binding Initial}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="40"
+                       FontAttributes="Bold"
+                       TextColor="{dx:ThemeColor OnPrimary}"/>
+            </Border>
+                <Label Text="{Binding Name}"
+                       HorizontalOptions="Center"
+                       FontSize="20"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1"
+                             BackgroundColor="{dx:ThemeColor OnPrimary}"
+                             VerticalOptions="Start">
+            <Grid ColumnDefinitions="20,*,20"
+                  ColumnSpacing="5">
+                <dx:DXImage Grid.Column="0"
+                            VerticalOptions="Center"
+                            Source="user_circle.png"
+                            WidthRequest="25" />
+                <Label Grid.Column="1"
+                       FontSize="16"
+                       VerticalOptions="Center"
+                       Text="Име" />
+                <dx:DXImage Grid.Column="2"
+                            VerticalOptions="Center"
+                            Source="plus.png"
+                            WidthRequest="25" />
+            </Grid>
+        </VerticalStackLayout>
+        <dx:DXButton Grid.Row="2"
+                     Content="Изход"
+                     HorizontalOptions="Center"
+                     BackgroundColor="{dx:ThemeColor Error}"
+                     Padding="25,5"
+                     Style="{StaticResource btnSm}" />
+    </Grid>
+</ContentPage>

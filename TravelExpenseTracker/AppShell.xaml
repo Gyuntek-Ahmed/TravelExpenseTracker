@@ -43,9 +43,9 @@
             Route="MainPage2" />
         <ShellContent
             Title="Настройки"
-            ContentTemplate="{DataTemplate pages:MainPage}"
+            ContentTemplate="{DataTemplate pages:SettingsPage}"
             Icon="settings.png"
-            Route="MainPage3" />
+            Route="SettingsPage" />
     </TabBar>
 
 </Shell>
