@@ -9,7 +9,20 @@
              x:DataType="vm:SettingsViewModel"
              Title="Настройки">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="menuLabel">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="dx:DXImage" x:Key="menuIcon">
+                <Setter Property="WidthRequest" Value="25" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*,Auto"
+          RowSpacing="25"
           Padding="15">
         <VerticalStackLayout Grid.Row="0"
                              Spacing="5">
@@ -28,29 +41,98 @@
                        FontAttributes="Bold"
                        TextColor="{dx:ThemeColor OnPrimary}"/>
             </Border>
-                <Label Text="{Binding Name}"
+            <Label Text="{Binding Name}"
                        HorizontalOptions="Center"
                        FontSize="20"/>
         </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1"
-                             BackgroundColor="{dx:ThemeColor OnPrimary}"
-                             VerticalOptions="Start">
-            <Grid ColumnDefinitions="20,*,20"
-                  ColumnSpacing="5">
-                <dx:DXImage Grid.Column="0"
-                            VerticalOptions="Center"
-                            Source="user_circle.png"
-                            WidthRequest="25" />
-                <Label Grid.Column="1"
-                       FontSize="16"
-                       VerticalOptions="Center"
-                       Text="Име" />
-                <dx:DXImage Grid.Column="2"
-                            VerticalOptions="Center"
-                            Source="plus.png"
-                            WidthRequest="25" />
-            </Grid>
-        </VerticalStackLayout>
+        <Border Grid.Row="1"
+                StrokeShape="RoundRectangle 15"
+                BackgroundColor="{dx:ThemeColor OnPrimary}"
+                StrokeThickness="0"
+                VerticalOptions="Start"
+                Padding="10">
+            <VerticalStackLayout BackgroundColor="{dx:ThemeColor OnPrimary}"
+                                 VerticalOptions="Start"
+                                 Spacing="20">
+                <Grid RowDefinitions="Auto, 1"
+                      RowSpacing="8"
+                      ColumnDefinitions="20,*,20"
+                      ColumnSpacing="10">
+                    <dx:DXImage Grid.Column="0"
+                                Style="{StaticResource menuIcon}"
+                                Source="pen_alt.png" />
+                    <Label Grid.Column="1"
+                           Style="{StaticResource menuLabel}"
+                           Text="Име" />
+                    <dx:DXImage Grid.Column="2"
+                                Style="{StaticResource menuIcon}"
+                                Source="chevron_right.png" />
+
+                    <BoxView Grid.Row="1"
+                             Grid.Column="1"
+                             Grid.ColumnSpan="3"
+                             Color="{dx:ThemeColor TertiaryContainer}"
+                             HeightRequest="0.5" />
+                </Grid>
+
+                <Grid RowDefinitions="Auto, 1"
+                      RowSpacing="8"
+                      ColumnDefinitions="20,*,20"
+                      ColumnSpacing="5">
+                    <dx:DXImage Grid.Column="0"
+                                Style="{StaticResource menuIcon}"
+                                Source="lock_keyhole.png" />
+                    <Label Grid.Column="1"
+                           Style="{StaticResource menuLabel}"
+                           Text="Промяна на парола" />
+                    <dx:DXImage Grid.Column="2"
+                                Style="{StaticResource menuIcon}"
+                                Source="chevron_right.png" />
+
+                    <BoxView Grid.Row="1"
+                             Grid.Column="1"
+                             Grid.ColumnSpan="3"
+                             Color="{dx:ThemeColor TertiaryContainer}"
+                             HeightRequest="0.5" />
+                </Grid>
+
+                <Grid RowDefinitions="Auto, 1"
+                      RowSpacing="8"
+                      ColumnDefinitions="20,*,20"
+                      ColumnSpacing="5">
+                    <dx:DXImage Grid.Column="0"
+                                Style="{StaticResource menuIcon}"
+                                Source="list_ul.png" />
+                    <Label Grid.Column="1"
+                           Style="{StaticResource menuLabel}"
+                           Text="Управление на категории разходи" />
+                    <dx:DXImage Grid.Column="2"
+                                Style="{StaticResource menuIcon}"
+                                Source="chevron_right.png" />
+
+                    <BoxView Grid.Row="1"
+                             Grid.Column="1"
+                             Grid.ColumnSpan="3"
+                             Color="{dx:ThemeColor TertiaryContainer}"
+                             HeightRequest="0.5" />
+                </Grid>
+                
+                <Grid RowDefinitions="Auto, 1"
+                      RowSpacing="8"
+                      ColumnDefinitions="20,*,20"
+                      ColumnSpacing="5">
+                    <dx:DXImage Grid.Column="0"
+                                Style="{StaticResource menuIcon}"
+                                Source="info_circle.png" />
+                    <Label Grid.Column="1"
+                           Style="{StaticResource menuLabel}"
+                           Text="Developed by Gyuntek Ahmed" />
+                    <dx:DXImage Grid.Column="2"
+                                Style="{StaticResource menuIcon}"
+                                Source="chevron_right.png" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
         <dx:DXButton Grid.Row="2"
                      Content="Изход"
                      HorizontalOptions="Center"
