@@ -14,9 +14,9 @@
                  HorizontalOptions="Center">
             <dx:DXImage Source="logo.png" MaximumHeightRequest="170" />
             <Label Style="{StaticResource labelStyle}"
-           Text="Проследяване на" />
+                   Text="Проследяване на" />
             <Label Style="{StaticResource labelStyle}"
-           Text="Пътни Разходи" />
+                   Text="Пътни Разходи" />
         </VerticalStackLayout>
 
         <Label Grid.Row="1"

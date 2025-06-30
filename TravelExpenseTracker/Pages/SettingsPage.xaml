@@ -26,31 +26,45 @@
           Padding="15">
         <VerticalStackLayout Grid.Row="0"
                              Spacing="5">
-            <Border BackgroundColor="{dx:ThemeColor Primary}"
-                    HeightRequest="80"
-                    WidthRequest="80"
-                    StrokeShape="RoundRectangle 40"
-                    StrokeThickness="5">
-                <Border.Shadow>
-                    <Shadow/>
-                </Border.Shadow>
+            <dx:DXBorder BackgroundColor="{dx:ThemeColor Primary}"
+                         HeightRequest="80"
+                         WidthRequest="80"
+                         CornerRadius="40"
+                         BorderThickness="5">
+                <dx:DXBorder.Shadow>
+                    <OnPlatform x:TypeArguments="Shadow">
+                        <On Platform="iOS">
+                            <On.Value>
+                                <Shadow Brush="{dx:ThemeColor Primary}"
+                                        Radius="8" />
+                            </On.Value>
+                        </On>
+                        <On Platform="Android">
+                            <On.Value>
+                                <Shadow Brush="{dx:ThemeColor Primary}"
+                                        Radius="30" />
+                            </On.Value>
+                        </On>
+                    </OnPlatform>
+
+                </dx:DXBorder.Shadow>
                 <Label Text="{Binding Initial}"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
                        FontSize="40"
                        FontAttributes="Bold"
                        TextColor="{dx:ThemeColor OnPrimary}"/>
-            </Border>
+            </dx:DXBorder>
             <Label Text="{Binding Name}"
                        HorizontalOptions="Center"
                        FontSize="20"/>
         </VerticalStackLayout>
-        <Border Grid.Row="1"
-                StrokeShape="RoundRectangle 15"
-                BackgroundColor="{dx:ThemeColor OnPrimary}"
-                StrokeThickness="0"
-                VerticalOptions="Start"
-                Padding="10">
+        <dx:DXBorder Grid.Row="1"
+                     CornerRadius="15"
+                     BackgroundColor="{dx:ThemeColor OnPrimary}"
+                     BorderThickness="0"
+                     VerticalOptions="Start"
+                     Padding="10">
             <VerticalStackLayout BackgroundColor="{dx:ThemeColor OnPrimary}"
                                  VerticalOptions="Start"
                                  Spacing="20">
@@ -115,6 +129,9 @@
                              Grid.ColumnSpan="3"
                              Color="{dx:ThemeColor TertiaryContainer}"
                              HeightRequest="0.5" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToManageCategoriesCommand}" />
+                    </Grid.GestureRecognizers>
                 </Grid>
                 
                 <Grid RowDefinitions="Auto, 1"
@@ -132,10 +149,13 @@
                                 Source="chevron_right.png" />
                 </Grid>
             </VerticalStackLayout>
-        </Border>
+        </dx:DXBorder>
         <dx:DXButton Grid.Row="2"
                      Content="Изход"
                      HorizontalOptions="Center"
+                     HeightRequest="50"
+                     WidthRequest="150"
+                     FontSize="18"
                      BackgroundColor="{dx:ThemeColor Error}"
                      Padding="25,5"
                      Style="{StaticResource btnSm}" />

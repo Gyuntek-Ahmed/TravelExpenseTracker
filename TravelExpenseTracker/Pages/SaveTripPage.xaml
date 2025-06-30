@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TravelExpenseTracker.Pages.SaveTripPage"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
+             xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             BackgroundColor="{dx:ThemeColor Surface}"
+             x:DataType="vm:SaveTripViewModel"
+             Title="Добави Пътуване">
+
+    <dx:DXScrollView>
+        <dx:DXStackLayout Orientation="Vertical"
+                          ItemSpacing="15"
+                          Padding="10">
+            <Label Text="Категория" />
+            
+            <dx:DXCollectionView ItemsSource="{Binding Categories}"
+                                     ItemSpacing="10"
+                                     ItemSpanSpacing="10"
+                                     HeightRequest="400"
+                                     ItemSpanCount="3">
+                <dx:DXCollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:CategoryModel">
+                        <dx:DXBorder CornerRadius="5"
+                                         BackgroundColor="{dx:ThemeColor OnSecondary}"
+                                         Padding="5">
+                            <dx:DXStackLayout Orientation="Vertical">
+                                <dx:DXImage Source="{Binding Image}"/>
+
+                                <Label Text="{Binding Name}"
+                                           HorizontalOptions="Center"/>
+                            </dx:DXStackLayout>
+                        </dx:DXBorder>
+                    </DataTemplate>
+                </dx:DXCollectionView.ItemTemplate>
+            </dx:DXCollectionView>
+
+            <Label Text="Име на пътуването" />
+            <dx:TextEdit PlaceholderText="Наименование на пътуването"
+                            PlaceholderColor="LightGray"/>
+
+            <Label Text="Местоположение" />
+            <dx:TextEdit PlaceholderText="Държава, град, улица номер"
+                            PlaceholderColor="LightGray"/>
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="5">
+                <dx:DateEdit LabelText="Начална дата"
+                                 Grid.Column="0"/>
+
+                <dx:DateEdit LabelText="Крайна дата"
+                             Grid.Column="1"/>
+            </Grid>
+            <Label Text="Статус" />
+            <dx:FormListPickerItem ItemsSource="{Binding Statuses}"
+                                       Detail="Изберете статус на пътуването"
+                                       DetailColor="LightGray"
+                                       SeparatorColor="LightGray"/>
+            <dx:DXButton Content="Запази Пътуването"
+                         HeightRequest="50"
+                         WidthRequest="200"/>
+        </dx:DXStackLayout>
+    </dx:DXScrollView>
+</ContentPage>

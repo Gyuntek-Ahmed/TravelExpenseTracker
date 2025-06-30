@@ -21,15 +21,18 @@
                          Margin="0,300,0,0"
                          Spacing="15">
                 <Label Text="Все още няма пътувания"
-               FontSize="25"
-               TextColor="DarkGray"/>
+                       FontSize="25"
+                       TextColor="DarkGray"/>
                 <dx:DXButton Grid.Column="2"
-                     WidthRequest="150"
-                     Style="{StaticResource btnSm}"
-                     Content="+  Добави Пътуване"
-                     Command="{Binding AddTripTempCommand}"
-                     VerticalOptions="Start"
-                     HorizontalOptions="Center"/>
+                             FontSize="20"
+                             HeightRequest="60"
+                             TextVerticalAlignment="Center"
+                             TextHorizontalAlignment="Center"
+                             Style="{StaticResource btnSm}"
+                             Content="+  Добави Пътуване"
+                             Command="{Binding AddTripTempCommand}"
+                             VerticalOptions="Start"
+                             HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </CollectionView.EmptyView>
         <CollectionView.ItemsLayout>
@@ -38,10 +41,10 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:TripModel">
-                <Border BackgroundColor="{dx:ThemeColor Surface}"
-                        StrokeShape="RoundRectangle 15"
-                        Padding="10"
-                        StrokeThickness="0">
+                <dx:DXBorder BackgroundColor="{dx:ThemeColor Surface}"
+                             CornerRadius="15"
+                             Padding="10"
+                             BorderThickness="0">
                     <Grid ColumnDefinitions="120, 1, *"
                           ColumnSpacing="5">
                         <dx:DXImage Grid.Column="0"
@@ -58,16 +61,16 @@
                                        Text="{Binding Title}"
                                        FontSize="18"
                                        FontAttributes="Bold"/>
-                                <Border Grid.Column="1"
-                                        BackgroundColor="Green"
-                                        StrokeShape="RoundRectangle 10"
-                                        StrokeThickness="0"
-                                        Padding="10,2"
-                                        HeightRequest="20">
+                                <dx:DXBorder Grid.Column="1"
+                                             BackgroundColor="Green"
+                                             CornerRadius="10"
+                                             BorderThickness="0"
+                                             Padding="10,2"
+                                             HeightRequest="20">
                                     <Label Text="Планирано"
                                            TextColor="White"
                                            FontSize="10"/>
-                                </Border>
+                                </dx:DXBorder>
                             </Grid>
                             <HorizontalStackLayout Grid.Row="1"
                                                    Spacing="3">
@@ -88,7 +91,7 @@
                             </HorizontalStackLayout>
                         </Grid>
                     </Grid>
-                </Border>
+                </dx:DXBorder>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

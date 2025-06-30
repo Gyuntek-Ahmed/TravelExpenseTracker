@@ -38,9 +38,9 @@
             Route="TripsPage" />
         <ShellContent
             Title="Нова Екскурзия"
-            ContentTemplate="{DataTemplate pages:MainPage}"
+            ContentTemplate="{DataTemplate pages:SaveTripPage}"
             Icon="plus_circle.png"
-            Route="MainPage2" />
+            Route="SaveTripPage" />
         <ShellContent
             Title="Настройки"
             ContentTemplate="{DataTemplate pages:SettingsPage}"
