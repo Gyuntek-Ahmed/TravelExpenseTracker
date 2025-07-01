@@ -43,7 +43,9 @@
                            FontSize="25"
                            TextColor="DarkGray"/>
                     <dx:DXButton Grid.Column="2"
-                                 WidthRequest="150"
+                                 WidthRequest="200"
+                                 HeightRequest="50"
+                                 FontSize="15"
                                  Style="{StaticResource btnSm}"
                                  Content="+  Добави Пътуване"
                                  Command="{Binding AddTripTempCommand}"
@@ -72,6 +74,11 @@
                                    Padding="10,0"
                                    FontSize="12"/>
                         </VerticalStackLayout>
+                        <dx:DXBorder.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}},
+                                                  Path=GoToTripDetailsPageCommand}"
+                                                  CommandParameter="{Binding ID}"/>
+                        </dx:DXBorder.GestureRecognizers>
                     </dx:DXBorder>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

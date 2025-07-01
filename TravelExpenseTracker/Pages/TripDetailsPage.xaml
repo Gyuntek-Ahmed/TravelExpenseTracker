@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TravelExpenseTracker.Pages.TripDetailsPage"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
+             xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             BackgroundColor="{dx:ThemeColor Surface}"
+             x:DataType="vm:TripDetailsViewModel"
+             Title="{Binding TripInfo.Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="pen_alt.png" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="200, Auto, Auto, *"
+          RowSpacing="2">
+        <dx:DXImage Grid.Row="0"
+                    Margin="0,5"
+                    Source="{Binding TripInfo.Image}"
+                    Aspect="AspectFit"/>
+        <dx:DXBorder Grid.Row="1"
+                     CornerRadius="15"
+                     BackgroundColor="{dx:ThemeColor OnPrimary}"
+                     Padding="10"
+                     BorderThickness="0"
+                     Margin="8, 0">
+            <dx:DXStackLayout Orientation="Vertical"
+                              ItemSpacing="10">
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Grid.Column="0"
+                       Text="{Binding TripInfo.Title}"
+                       FontSize="20"/>
+                    <dx:DXBorder Grid.Column="1"
+                             BackgroundColor="Green"
+                             CornerRadius="10"
+                             BorderThickness="0"
+                             Padding="10,2"
+                             HeightRequest="20">
+                        <Label Text="{Binding TripInfo.Status}"
+                           TextColor="White"
+                           FontSize="10"/>
+                    </dx:DXBorder>
+                </Grid>
+                <dx:DXStackLayout Orientation="Horizontal"
+                                  ItemSpacing="5">
+                    <dx:DXImage Source="location.png"
+                                VerticalOptions="Center"
+                                HeightRequest="20"/>
+                    <Label Text="{Binding TripInfo.Location}"
+                           FontSize="16"
+                           VerticalOptions="Center"/>
+                </dx:DXStackLayout>
+                <dx:DXStackLayout Orientation="Horizontal"
+                                  ItemSpacing="5">
+                    <dx:DXImage Source="calendar.png"
+                                VerticalOptions="Center"
+                                HeightRequest="20"/>
+                    <Label Text="{Binding TripInfo.DisplayDateRange}"
+                           FontSize="16"
+                           VerticalOptions="Center"/>
+                </dx:DXStackLayout>
+                <dx:DXStackLayout Orientation="Horizontal"
+                                  ItemSpacing="5">
+                    <dx:DXImage Source="currency.png"
+                                VerticalOptions="Center"
+                                HeightRequest="20"/>
+                    <Label Text="{Binding TotalExpenses, StringFormat='{0:C}'}"
+                           FontSize="16"
+                           VerticalOptions="Center"/>
+                </dx:DXStackLayout>
+            </dx:DXStackLayout>
+            <dx:DXBorder.Shadow>
+                <OnPlatform x:TypeArguments="Shadow">
+                    <On Platform="iOS">
+                        <On.Value>
+                            <Shadow Brush="{dx:ThemeColor Primary}"
+                                            Radius="8" />
+                        </On.Value>
+                    </On>
+                    <On Platform="Android">
+                        <On.Value>
+                            <Shadow Brush="{dx:ThemeColor Primary}"
+                                            Radius="30" />
+                        </On.Value>
+                    </On>
+                </OnPlatform>
+            </dx:DXBorder.Shadow>
+        </dx:DXBorder>
+        <Grid ColumnDefinitions="*, Auto"
+              Margin="15, 15, 15, 5"
+              Grid.Row="2">
+            <Label Grid.Column="0"
+                       Text="Разходи"
+                       FontSize="20" />
+            <dx:DXButton Grid.Column="1"
+                             FontSize="12"
+                             Command="{Binding AddExpenseTempCommand}"
+                             Content="+ Добави Разход" />
+        </Grid>
+        <CollectionView ItemsSource="{Binding Expenses}"
+                        Grid.Row="3">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <dx:DXStackLayout Orientation="Vertical"
+                                  HorizontalOptions="Center"
+                                  Margin="0, 50">
+                    <Label Text="Все още няма добавени разходи"
+                           TextColor="DarkGray"
+                           FontSize="18"/>
+                </dx:DXStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:ExpenseModel">
+                    <dx:DXBorder BackgroundColor="{dx:ThemeColor OnPrimary}"
+                                 BorderThickness="0"
+                                 CornerRadius="8"
+                                 Padding="15">
+                        <Grid RowDefinitions="Auto, Auto">
+                            <Grid Grid.Row="0"
+                                  ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0"
+                                       FontSize="20"
+                                       Text="{Binding Amount, StringFormat='{0:C}'}"
+                                       VerticalOptions="Center"/>
+                                <dx:DXStackLayout Orientation="Horizontal"
+                                                  Grid.Column="1"
+                                                  ItemSpacing="5">
+                                    <dx:DXImage Source="calendar.png"
+                                                VerticalOptions="Center"
+                                                HeightRequest="18" />
+                                    <Label Text="{Binding SpendOn, StringFormat='{0:dd-MM-yy}'}"
+                                           VerticalOptions="Center"/>
+                                </dx:DXStackLayout>
+
+                            </Grid>
+                            <dx:DXStackLayout Orientation="Horizontal"
+                                              Grid.Row="1"
+                                              ItemSpacing="10">
+                                <dx:DXBorder BackgroundColor="{dx:ThemeColor Primary}"
+                                             CornerRadius="10"
+                                             Padding="10,0"
+                                             BorderThickness="0">
+                                    <Label Text="{Binding Category}"
+                                           TextColor="{dx:ThemeColor OnPrimary}"
+                                           VerticalOptions="Center"
+                                           FontSize="12"/>
+                                </dx:DXBorder>
+                                <Label Text="{Binding Title}"
+                                       FontSize="15"/>
+                            </dx:DXStackLayout>
+                        </Grid>
+                    </dx:DXBorder>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

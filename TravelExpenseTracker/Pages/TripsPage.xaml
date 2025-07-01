@@ -91,6 +91,12 @@
                             </HorizontalStackLayout>
                         </Grid>
                     </Grid>
+
+                    <dx:DXBorder.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TripsViewModel}},
+                                              Path=GoToTripDetailsPageCommand}"
+                                              CommandParameter="{Binding ID}"/>
+                    </dx:DXBorder.GestureRecognizers>
                 </dx:DXBorder>
             </DataTemplate>
         </CollectionView.ItemTemplate>
