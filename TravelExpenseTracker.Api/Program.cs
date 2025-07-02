@@ -1,6 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Text;
 using TravelExpenseTracker.Api.Data;
 using TravelExpenseTracker.Api.Data.Entities;
 using TravelExpenseTracker.Api.Services;
@@ -21,6 +25,30 @@ builder
     .AddScoped<AuthService>()
     .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
+builder
+    .Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var key = builder.Configuration.GetValue<string>("Jwt:SecurityKey");
+        var keyByteArray = Encoding.UTF8.GetBytes(key!);
+        var securityKey = new SymmetricSecurityKey(keyByteArray);
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = securityKey,
+            ValidateLifetime = true,
+        };
+    });
+
+builder
+    .Services
+    .AddAuthorization();
+
 var app = builder.Build();
 
 AutoDbMigrate(app.Services);
@@ -34,7 +62,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app
+    .UseAuthentication()
+    .UseAuthorization();
 
 app.MapControllers();
 
