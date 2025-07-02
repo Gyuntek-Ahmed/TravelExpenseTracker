@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using TravelExpenseTracker.Models;
+using TravelExpenseTracker.Pages;
 
 namespace TravelExpenseTracker.ViewModels
 {
@@ -23,13 +24,15 @@ namespace TravelExpenseTracker.ViewModels
         private decimal _totalExpenses;
 
         [RelayCommand]
-        private void AddExpenseTemp()
+        private async Task AddExpenseTempAsync()
         {
             Expenses.Add(new ExpenseModel(1, "Самолетен Билет", "Билети", 1500, DateTime.Today));
             Expenses.Add(new ExpenseModel(2, "Дрехи, обувки и козметика", "Пазаруване", 850, DateTime.Today.AddDays(1)));
             Expenses.Add(new ExpenseModel(3, "Храна и напитки", "Храна", 300, DateTime.Today.AddDays(2)));
 
             TotalExpenses = Expenses.Sum(e => e.Amount);
+
+            await Shell.Current.GoToAsync(nameof(SaveExpensePage));
         }
     }
 }

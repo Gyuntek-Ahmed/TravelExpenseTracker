@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TravelExpenseTracker.Pages.SaveExpensePage"
+             Shell.PresentationMode="ModalAnimated"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
+             xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             BackgroundColor="{dx:ThemeColor Surface}"
+             x:DataType="vm:SaveExpenseViewModel">
+
+    <Grid RowDefinitions="Auto, *"
+          RowSpacing="25"
+          Padding="15">
+        <dx:DXStackLayout Orientation="Vertical"
+                          HorizontalOptions="Center"
+                          ItemSpacing="5">
+            <ImageButton Grid.Column="0"
+                         MinimumHeightRequest="40"
+                         MinimumWidthRequest="40"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         BackgroundColor="{dx:ThemeColor OnPrimary}"
+                         Padding="5"
+                         CornerRadius="20"
+                         Command="{Binding GoBackCommand}"
+                         Source="x.png" />
+            <Label Grid.Column="1"
+                   Text="Запази разходи"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontSize="20"/>
+        </dx:DXStackLayout>
+        <dx:DXStackLayout Grid.Row="1"
+                          ItemSpacing="16"
+                          Orientation="Vertical">
+            <Label Text="Разход за" />
+            <dx:TextEdit PlaceholderText="Наименование на разхода"
+                         PlaceholderColor="LightGray"/>
+
+            <Label Text="Размер" />
+            <dx:TextEdit PlaceholderText="Размер на разхода"
+                         PlaceholderColor="LightGray"/>
+
+            <dx:DateEdit LabelText="Дата" />
+
+            <Label Text="Категория" />
+            <dx:TextEdit PlaceholderText="Категория разходи"
+                         PlaceholderColor="LightGray"/>
+
+            <dx:DXButton Content="Запази разход"
+                         WidthRequest="170"
+                         HeightRequest="70"
+                         FontSize="18"/>
+        </dx:DXStackLayout>
+    </Grid>
+</ContentPage>
