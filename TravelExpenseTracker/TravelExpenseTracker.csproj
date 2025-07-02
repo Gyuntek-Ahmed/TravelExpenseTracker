@@ -73,6 +73,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\TravelExpenseTracker.Shared\TravelExpenseTracker.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Pages\TripsPage.xaml.cs">
 	    <DependentUpon>TripsPage.xaml</DependentUpon>
 	  </Compile>

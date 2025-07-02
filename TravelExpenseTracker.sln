@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelExpenseTracker", "TravelExpenseTracker\TravelExpenseTracker.csproj", "{97B21A8E-E6D8-4C40-96D2-F6DD20D00CC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelExpenseTracker.Api", "TravelExpenseTracker.Api\TravelExpenseTracker.Api.csproj", "{0467428D-126C-4FB2-A534-8A706157D313}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelExpenseTracker.Shared", "TravelExpenseTracker.Shared\TravelExpenseTracker.Shared.csproj", "{E1686D0C-DBEE-4BD1-8817-A37BBD4F7CDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +20,14 @@ Global
 		{97B21A8E-E6D8-4C40-96D2-F6DD20D00CC9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{97B21A8E-E6D8-4C40-96D2-F6DD20D00CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97B21A8E-E6D8-4C40-96D2-F6DD20D00CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0467428D-126C-4FB2-A534-8A706157D313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0467428D-126C-4FB2-A534-8A706157D313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0467428D-126C-4FB2-A534-8A706157D313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0467428D-126C-4FB2-A534-8A706157D313}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1686D0C-DBEE-4BD1-8817-A37BBD4F7CDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1686D0C-DBEE-4BD1-8817-A37BBD4F7CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1686D0C-DBEE-4BD1-8817-A37BBD4F7CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1686D0C-DBEE-4BD1-8817-A37BBD4F7CDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
