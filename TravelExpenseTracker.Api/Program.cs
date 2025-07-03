@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
@@ -24,6 +23,12 @@ builder
     .Services
     .AddScoped<AuthService>()
     .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder
+    .Services
+    .AddScoped<TripsService>()
+    .AddScoped<TripExpenseService>()
+    .AddScoped<ProfileService>()
+    .AddScoped<JwtService>();
 
 builder
     .Services

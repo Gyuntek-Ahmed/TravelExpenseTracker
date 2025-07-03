@@ -14,7 +14,7 @@ namespace TravelExpenseTracker.Api.Services
             _context = context;
         }
 
-        public async Task<CategoryDto[]> GetCategories()
+        public async Task<CategoryDto[]> GetCategoriesAsync()
             => await _context.TripCategories
                 .AsNoTracking()
                 .Select(c => new CategoryDto(c.Id, c.Name, c.Image!))
@@ -84,5 +84,32 @@ namespace TravelExpenseTracker.Api.Services
                 t.StartDate,
                 t.EndDate
             )).ToArrayAsync();
+
+        public async Task<ApiResult<TripDetailsDto>> GetTripDetailsAsync(int tripId, int userId)
+        {
+            var tripInfo = await _context.Trips
+                .AsNoTracking()
+                .Where(t => t.Id == tripId && t.UserId == userId)
+                .Select(t => new TripListDto(t.Id, t.Title, t.Category.Image!, t.Status, t.Location, t.StartDate, t.EndDate))
+                .FirstOrDefaultAsync();
+
+            if (tripInfo is null)
+                return ApiResult<TripDetailsDto>.Fail("Пътуването не съществува или нямате права да го видите.");
+
+            var expenses = await _context.TripExpenses
+                .AsNoTracking()
+                .Where(e => e.TripId == tripId)
+                .Select(e => new ExpenseListDto
+                (
+                    e.Id,
+                    e.Title,
+                    e.ExpenseCategory.Name,
+                    e.Amount,
+                    e.SpentOn
+                ))
+                .ToArrayAsync();
+
+            return ApiResult<TripDetailsDto>.Success(new TripDetailsDto(tripInfo, expenses));
+        }
     }
 }

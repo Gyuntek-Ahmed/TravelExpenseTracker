@@ -14,13 +14,13 @@ namespace TravelExpenseTracker.Api.Services
     {
         private readonly DataContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly IConfiguration _configuration;
+        private readonly JwtService _jwtService;
 
-        public AuthService(DataContext context, IPasswordHasher<User> passwordHasher, IConfiguration configuration)
+        public AuthService(DataContext context, IPasswordHasher<User> passwordHasher, JwtService jwtService)
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            _configuration = configuration;
+            _jwtService = jwtService;
         }
 
         public async Task<ApiResult> RegisterAsync(RegisterDto dto)
@@ -51,36 +51,8 @@ namespace TravelExpenseTracker.Api.Services
             if (passwordVerificationResult == PasswordVerificationResult.Failed)
                 return ApiResult<string>.Fail("Невалидена парола.");
 
-            var token = GenerateJwtToken(user);
+            var token = _jwtService.GenerateJwtToken(user);
             return ApiResult<string>.Success(token);
-        }
-
-        private string GenerateJwtToken(User user)
-        {
-            Claim[] claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-
-            var key = _configuration.GetValue<string>("Jwt:SecurityKey");
-
-            var keyByteArray = Encoding.UTF8.GetBytes(key!);
-
-            var securityKey = new SymmetricSecurityKey(keyByteArray);
-
-            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var jwtSecToken = new JwtSecurityToken(
-                issuer: _configuration.GetValue<string>("Jwt:Issuer"),
-                claims: claims,
-                expires: DateTime.UtcNow.AddDays(7),
-                signingCredentials: signingCredentials
-                );
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(jwtSecToken);
-            return jwt;
         }
     }
 }
