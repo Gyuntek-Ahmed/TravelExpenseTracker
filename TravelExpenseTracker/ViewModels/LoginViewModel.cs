@@ -1,11 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TravelExpenseTracker.APIs;
 using TravelExpenseTracker.Pages;
+using TravelExpenseTracker.Services;
+using TravelExpenseTracker.Shared.DTOs;
 
 namespace TravelExpenseTracker.ViewModels
 {
-    public partial class LoginViewModel : ObservableObject
+    public partial class LoginViewModel : BaseViewModel
     {
+        private readonly IAuthApi _authApi;
+        private readonly AuthService _authService;
+
+        public LoginViewModel(IAuthApi authApi, AuthService authService)
+        {
+            _authApi = authApi;
+            _authService = authService;
+        }
+
         [ObservableProperty]
         private string _email;
 
@@ -20,10 +32,32 @@ namespace TravelExpenseTracker.ViewModels
         private async Task LoginAsync()
         {
             // Login Validation
-            // Call the API
-            // Redirect to Home/Main page
+            if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+            {
+                await ErrorAlertAsync("Моля, въведете валиден имейл и парола.");
+                return;
+            }
 
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+            var newLoginDto = new LoginDto
+            {
+                Email = Email,
+                Password = Password
+            };
+
+            await MakeApiCall(async () =>
+            {
+                var result = await _authApi.LoginAsync(newLoginDto);
+                if (!result.IsSuccess)
+                {
+                    await ErrorAlertAsync(result.Error!);
+                    return;
+                }
+
+                // Store the token
+                var token = result.Data;
+                _authService.SetToken(token);
+                await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+            });
         }
     }
 }

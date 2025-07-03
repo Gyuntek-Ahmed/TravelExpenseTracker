@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
 using TravelExpenseTracker.Api.Services;
 using TravelExpenseTracker.Shared.DTOs;
 
@@ -30,7 +27,7 @@ namespace TravelExpenseTracker.Api.Controllers
         public async Task<TripListDto[]> GetUserTrips(int count = 100)
             => await _tripsService.GetUserTripsAsync(UserId, count);
 
-        [HttpGet("{tripId}")] // URL: GET /api/trips/tripId  e.g. /api/trips/5
+        [HttpGet("{tripId:int}")] // URL: GET /api/trips/tripId  e.g. /api/trips/5
         public async Task<ApiResult<TripDetailsDto>> GetTripDetails(int tripId)
             => await _tripsService.GetTripDetailsAsync(tripId, UserId);
 

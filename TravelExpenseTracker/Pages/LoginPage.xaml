@@ -7,40 +7,48 @@
              x:DataType="vm:LoginViewModel"
              Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto, Auto, Auto, *"
-          Margin="0, 30, 0, 0"
-          RowSpacing="15">
-        <VerticalStackLayout Grid.Row="0"
-                 HorizontalOptions="Center">
-            <dx:DXImage Source="logo.png" MaximumHeightRequest="170" />
-            <Label Style="{StaticResource labelStyle}"
-                   Text="Проследяване на" />
-            <Label Style="{StaticResource labelStyle}"
-                   Text="Пътни Разходи" />
-        </VerticalStackLayout>
+    <Grid>
+        <Grid RowDefinitions="Auto, Auto, Auto, *"
+              Margin="0, 30, 0, 0"
+              RowSpacing="15">
+            <VerticalStackLayout Grid.Row="0"
+                                 HorizontalOptions="Center">
+                <dx:DXImage Source="logo.png" MaximumHeightRequest="170" />
+                <Label Style="{StaticResource labelStyle}"
+                       Text="Проследяване на" />
+                <Label Style="{StaticResource labelStyle}"
+                       Text="Пътни Разходи" />
+            </VerticalStackLayout>
 
-        <Label Grid.Row="1"
-               Text="Добре Дошли!"
-               FontSize="22"
-               HorizontalOptions="Center" />
+            <Label Grid.Row="1"
+                   Text="Добре Дошли!"
+                   FontSize="22"
+                   HorizontalOptions="Center" />
 
-        <VerticalStackLayout Grid.Row="2"
-                             Spacing="20"
-                             Padding="25">
-            <dx:TextEdit PlaceholderText="Email"/>
-            <dx:PasswordEdit PlaceholderText="Парола"
-                             ErrorText="Невалидна Парола!"/>
-            <dx:DXButton Content="Вход"
-                         Style="{StaticResource logRegBtnStyle}"
-                         Command="{Binding LoginCommand}"/>
-            <Label Text="Нямате акаунт? Регистрирайте се"
-                   FontSize="18"
-                   HorizontalOptions="Center"
-                   TextColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToRegisterCommand}"/>
-                </Label.GestureRecognizers>
-            </Label>
-        </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="2"
+                                 Spacing="20"
+                                 Padding="25">
+                <dx:TextEdit PlaceholderText="Email"
+                             Text="{Binding Email}"/>
+                <dx:PasswordEdit PlaceholderText="Парола"
+                                 Text="{Binding Password}"
+                                 ErrorText="Невалидна Парола!"/>
+                <dx:DXButton Content="Вход"
+                             Style="{StaticResource logRegBtnStyle}"
+                             Command="{Binding LoginCommand}"/>
+                <Label Text="Нямате акаунт? Регистрирайте се"
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToRegisterCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Grid>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           Color="{dx:ThemeColor Primary}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>

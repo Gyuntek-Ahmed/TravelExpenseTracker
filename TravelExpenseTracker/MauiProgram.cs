@@ -4,6 +4,10 @@ using TravelExpenseTracker.Pages;
 using TravelExpenseTracker.ViewModels;
 using DevExpress.Maui;
 using DevExpress.Maui.Core;
+using Refit;
+using TravelExpenseTracker.APIs;
+using Microsoft.Extensions.DependencyInjection;
+using TravelExpenseTracker.Services;
 
 namespace TravelExpenseTracker
 {
@@ -69,8 +73,47 @@ namespace TravelExpenseTracker
                 .Services
                 .AddTransient<SaveExpenseViewModel>()
                 .AddTransient<SaveExpensePage>();
+            builder
+                .Services
+                .AddSingleton<AuthService>();
+
+            ConfigureRefit(builder.Services);
 
             return builder.Build();
+        }
+
+        private static void ConfigureRefit(IServiceCollection services)
+        {
+            const string ApiBaseUrl = "https://8b51t5nc-7091.euw.devtunnels.ms/";
+
+            services
+                .AddRefitClient<IAuthApi>()
+                .ConfigureHttpClient(SetHttpClient);
+
+            services
+                .AddRefitClient<ITripsApi>(GetRefitSettings)
+                .ConfigureHttpClient(SetHttpClient);
+
+            services
+                .AddRefitClient<IExpensesApi>(GetRefitSettings)
+                .ConfigureHttpClient(SetHttpClient);
+
+            services
+                .AddRefitClient<IProfileApi>(GetRefitSettings)
+                .ConfigureHttpClient(SetHttpClient);
+
+            static RefitSettings GetRefitSettings(IServiceProvider sp)
+            {
+                var authService = sp.GetRequiredService<AuthService>();
+                return new RefitSettings
+                {
+                    AuthorizationHeaderValueGetter = (_, __) => Task.FromResult(authService.Token ?? "")
+                };
+            }
+
+            static void SetHttpClient(HttpClient client)
+                => client.BaseAddress = new Uri(ApiBaseUrl);
+            
         }
     }
 }
