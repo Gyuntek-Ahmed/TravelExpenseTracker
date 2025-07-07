@@ -7,59 +7,80 @@
              xmlns:model="clr-namespace:TravelExpenseTracker.Models"
              BackgroundColor="{dx:ThemeColor Surface}"
              x:DataType="vm:SaveTripViewModel"
-             Title="Добави Пътуване">
+             Title="{Binding PageTitle}">
 
     <dx:DXScrollView>
-        <dx:DXStackLayout Orientation="Vertical"
-                          ItemSpacing="15"
-                          Padding="10">
-            <Label Text="Категория" />
-            
-            <dx:DXCollectionView ItemsSource="{Binding Categories}"
+        <Grid>
+            <dx:DXStackLayout Orientation="Vertical"
+                              ItemSpacing="15"
+                              Padding="10">
+                <Label Text="Категория" />
+
+                <dx:DXCollectionView ItemsSource="{Binding Categories}"
                                      ItemSpacing="10"
                                      ItemSpanSpacing="10"
                                      HeightRequest="400"
                                      ItemSpanCount="3">
-                <dx:DXCollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:CategoryModel">
-                        <dx:DXBorder CornerRadius="5"
+                    <dx:DXCollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:CategoryModel">
+                            <dx:DXBorder CornerRadius="5"
                                          BackgroundColor="{dx:ThemeColor OnSecondary}"
                                          Padding="5">
-                            <dx:DXStackLayout Orientation="Vertical">
-                                <dx:DXImage Source="{Binding Image}"/>
+                                <dx:DXStackLayout Orientation="Vertical">
+                                    <dx:DXImage Source="{Binding Image}"/>
 
-                                <Label Text="{Binding Name}"
+                                    <Label Text="{Binding Name}"
                                            HorizontalOptions="Center"/>
-                            </dx:DXStackLayout>
-                        </dx:DXBorder>
-                    </DataTemplate>
-                </dx:DXCollectionView.ItemTemplate>
-            </dx:DXCollectionView>
+                                </dx:DXStackLayout>
+                                <dx:DXBorder.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SaveTripViewModel}},
+                                                          Path=SetSelectedCategoryCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </dx:DXBorder.GestureRecognizers>
+                                <dx:DXBorder.Triggers>
+                                    <DataTrigger TargetType="dx:DXBorder" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceTint}" />
+                                    </DataTrigger>
+                                </dx:DXBorder.Triggers>
+                            </dx:DXBorder>
+                        </DataTemplate>
+                    </dx:DXCollectionView.ItemTemplate>
+                </dx:DXCollectionView>
 
-            <Label Text="Име на пътуването" />
-            <dx:TextEdit PlaceholderText="Наименование на пътуването"
-                            PlaceholderColor="LightGray"/>
+                <Label Text="Име на пътуването" />
+                <dx:TextEdit PlaceholderText="Наименование на пътуването"
+                             Text="{Binding Model.Title}"
+                             PlaceholderColor="LightGray"/>
 
-            <Label Text="Местоположение" />
-            <dx:TextEdit PlaceholderText="Държава, град, улица номер"
-                            PlaceholderColor="LightGray"/>
+                <Label Text="Местоположение" />
+                <dx:TextEdit PlaceholderText="Държава, град, улица номер"
+                             Text="{Binding Model.Location}"
+                             PlaceholderColor="LightGray"/>
 
-            <Grid ColumnDefinitions="*,*"
-                  ColumnSpacing="5">
-                <dx:DateEdit LabelText="Начална дата"
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="5">
+                    <dx:DateEdit LabelText="Начална дата"
+                                 Date="{Binding Model.StartDate}"
                                  Grid.Column="0"/>
 
-                <dx:DateEdit LabelText="Крайна дата"
-                             Grid.Column="1"/>
-            </Grid>
-            <Label Text="Статус" />
-            <dx:FormListPickerItem ItemsSource="{Binding Statuses}"
-                                       Detail="Изберете статус на пътуването"
-                                       DetailColor="LightGray"
-                                       SeparatorColor="LightGray"/>
-            <dx:DXButton Content="Запази Пътуването"
-                         HeightRequest="50"
-                         WidthRequest="200"/>
-        </dx:DXStackLayout>
+                    <dx:DateEdit LabelText="Крайна дата"
+                                 Date="{Binding Model.EndDate}"
+                                 Grid.Column="1"/>
+                </Grid>
+                <Label Text="Статус" />
+                <Picker ItemsSource="{Binding Statuses}"
+                                       SelectedItem="{Binding Model.Status}"
+                                       Title="Изберете статус на пътуването"
+                                       TitleColor="LightGray"/>
+                <dx:DXButton Content="Запази Пътуването"
+                             Command="{Binding SaveTripCommand}"
+                             HeightRequest="50"
+                             WidthRequest="200"/>
+            </dx:DXStackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               Color="{dx:ThemeColor Primary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+        </Grid>
     </dx:DXScrollView>
 </ContentPage>

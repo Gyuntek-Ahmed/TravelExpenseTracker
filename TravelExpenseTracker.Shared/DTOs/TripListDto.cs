@@ -7,6 +7,13 @@
         string Status,
         string Location,
         DateTime StartDate,
-        DateTime EndDate
-    );
+        DateTime EndDate,
+        int CategoryId
+    )
+    {
+        public string DisplayDateRange => $"{StartDate:dd/MM/yyyy} - {EndDate:dd/MM/yyyy}";
+
+        public static TripListDto Empty()
+            => new(default, string.Empty, string.Empty, string.Empty, string.Empty, default, default, default);
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Refit;
+using TravelExpenseTracker.Pages;
 
 namespace TravelExpenseTracker.ViewModels
 {
@@ -14,6 +16,11 @@ namespace TravelExpenseTracker.ViewModels
             {
                 IsBusy = true;
                 await apiCall.Invoke();
+            }
+            catch (ApiException apiEx) when (apiEx.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                await Shell.Current.DisplayAlert("Грешка", "Не сте влезли в системата. Моля, влезте отново.", "Вход");
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             }
             catch (Exception ex)
             {

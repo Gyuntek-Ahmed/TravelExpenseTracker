@@ -16,6 +16,6 @@ namespace TravelExpenseTracker.APIs
         Task<TripListDto[]> GetUserTripsAsync(int count = 100);
 
         [Get("/api/trips/{tripId}")]
-        Task<ApiResult<TripDetailsDto>> GetTripDetailsAsync(int tripId);
+        Task<ApiResult<TripDetailsDto>> GetTripDetailsAsync(int tripId, bool includeExpenses = true);
     }
 }

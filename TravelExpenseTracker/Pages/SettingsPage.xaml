@@ -87,6 +87,9 @@
                              Grid.ColumnSpan="3"
                              Color="{dx:ThemeColor TertiaryContainer}"
                              HeightRequest="0.5" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UpdateNameCommand}" />
+                    </Grid.GestureRecognizers>
                 </Grid>
 
                 <Grid RowDefinitions="Auto, 1"
@@ -108,6 +111,9 @@
                              Grid.ColumnSpan="3"
                              Color="{dx:ThemeColor TertiaryContainer}"
                              HeightRequest="0.5" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+                    </Grid.GestureRecognizers>
                 </Grid>
 
                 <Grid RowDefinitions="Auto, 1"
@@ -147,6 +153,10 @@
                     <dx:DXImage Grid.Column="2"
                                 Style="{StaticResource menuIcon}"
                                 Source="chevron_right.png" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToMyGitHubCommand}" />
+                    </Grid.GestureRecognizers>
                 </Grid>
             </VerticalStackLayout>
         </dx:DXBorder>
@@ -158,6 +168,13 @@
                      FontSize="18"
                      BackgroundColor="{dx:ThemeColor Error}"
                      Padding="25,5"
+                     Command="{Binding LogOutCommand}"
                      Style="{StaticResource btnSm}" />
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           Color="{dx:ThemeColor Primary}"
+                           Grid.RowSpan="3"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>

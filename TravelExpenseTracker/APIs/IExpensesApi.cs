@@ -12,7 +12,7 @@ namespace TravelExpenseTracker.APIs
         [Post("/api/trips/expenses/categories")]
         Task<ApiResult> SaveExpenseCategoryAsync(ExpenseCategoryDto dto);
 
-        [Get("/api/trips/expenses/of-trip/{tripId}/save")]
+        [Post("/api/trips/expenses/trip/{tripId}/save")]
         Task<ApiResult> SaveTripExpenseAsync(int tripId, ExpenseDto dto);
 
         [Get("/api/trips/expenses/of-trip/{tripId}")]

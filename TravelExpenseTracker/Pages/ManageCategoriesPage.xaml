@@ -5,6 +5,7 @@
              xmlns:dx="http://schemas.devexpress.com/maui"
              xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
              xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             xmlns:dto="clr-namespace:TravelExpenseTracker.Shared.DTOs;assembly=TravelExpenseTracker.Shared"
              BackgroundColor="{dx:ThemeColor Surface}"
              x:DataType="vm:ManageCategoriesViewModel"
              Title="Управление на категории">
@@ -14,19 +15,25 @@
                      IconImageSource="plus.png" />
     </ContentPage.ToolbarItems>
 
-    <dx:DXCollectionView ItemsSource="{Binding Categories}"
-                         ItemSpacing="5"
-                         Orientation="Vertical"
-                         Margin="15">
-        <dx:DXCollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:ManageCategoryModel">
-                <dx:DXBorder CornerRadius="8"
-                             BackgroundColor="{dx:ThemeColor OnPrimary}"
-                             Padding="10"
-                             BorderThickness="0">
-                    <Label Text="{Binding Name}" />
-                </dx:DXBorder>
-            </DataTemplate>
-        </dx:DXCollectionView.ItemTemplate>
-    </dx:DXCollectionView>
+    <Grid>
+        <dx:DXCollectionView ItemsSource="{Binding Categories}"
+                             ItemSpacing="5"
+                             Orientation="Vertical"
+                             Margin="15">
+            <dx:DXCollectionView.ItemTemplate>
+                <DataTemplate x:DataType="dto:ExpenseCategoryDto">
+                    <dx:DXBorder CornerRadius="8"
+                                 BackgroundColor="{dx:ThemeColor OnPrimary}"
+                                 Padding="10"
+                                 BorderThickness="0">
+                        <Label Text="{Binding Name}" />
+                    </dx:DXBorder>
+                </DataTemplate>
+            </dx:DXCollectionView.ItemTemplate>
+        </dx:DXCollectionView>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           Color="{dx:ThemeColor Primary}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+    </Grid>
 </ContentPage>

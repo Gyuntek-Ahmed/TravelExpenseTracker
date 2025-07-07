@@ -1,38 +1,107 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using TravelExpenseTracker.Models;
+using TravelExpenseTracker.APIs;
 using TravelExpenseTracker.Pages;
+using TravelExpenseTracker.Shared.DTOs;
 
 namespace TravelExpenseTracker.ViewModels
 {
-    public partial class TripDetailsViewModel : ObservableObject
+    [QueryProperty(nameof(TripId), nameof(TripId))]
+    [QueryProperty(nameof(ExpenseSaved), nameof(ExpenseSaved))]
+    [QueryProperty(nameof(TripUpdated), nameof(TripUpdated))]
+    public partial class TripDetailsViewModel : BaseViewModel
     {
-        public TripDetailModel TripInfo { get; set; } = new TripDetailModel(
-            "beach.png",
-            "Екскурзия до плажа",
-            "Анталия, Турция",
-            "Плаж",
-            "Планирано",
-            DateTime.Now.AddDays(7),
-            DateTime.Now.AddDays(14)
-            );
+        private readonly ITripsApi _tripsApi;
+        private readonly IExpensesApi _expensesApi;
 
-        public ObservableCollection<ExpenseModel> Expenses { get; set; } = [];
+        public TripDetailsViewModel(ITripsApi tripsApi, IExpensesApi expensesApi)
+        {
+            _tripsApi = tripsApi;
+            _expensesApi = expensesApi;
+        }
 
         [ObservableProperty]
-        private decimal _totalExpenses;
+        private TripListDto _tripInfo = TripListDto.Empty();
+
+        [ObservableProperty]
+        private int _tripId;
+
+        [ObservableProperty]
+        private bool _expenseSaved;
+
+        [ObservableProperty]
+        private bool _tripUpdated;
+
+        async partial void OnTripUpdatedChanged(bool value)
+        {
+            if(value)
+            {
+                await FetchTripDetailsAsync();
+                TripUpdated = false;
+            }
+        }
+
+        [ObservableProperty, NotifyPropertyChangedFor(nameof(TotalExpenses))]
+        private ExpenseListDto[] _expenses = [];
+
+        public decimal TotalExpenses => Expenses.Sum(e => e.Amount);
+
+        async partial void OnTripIdChanged(int value)
+        {
+            await FetchTripDetailsAsync();
+        }
+        
+        async partial void OnExpenseSavedChanged(bool value)
+        {
+            // This method is called when ExpenseSaved is set from the query parameter.
+            if (value)
+            {
+                await MakeApiCall(async () =>
+                {
+                    Expenses = await _expensesApi.GetTripExpensesAsync(TripId);
+                    ExpenseSaved = false; // Reset the flag to false after handling it
+                });
+            }
+
+        }
 
         [RelayCommand]
-        private async Task AddExpenseTempAsync()
+        private async Task AddExpenseAsync()
         {
-            Expenses.Add(new ExpenseModel(1, "Самолетен Билет", "Билети", 1500, DateTime.Today));
-            Expenses.Add(new ExpenseModel(2, "Дрехи, обувки и козметика", "Пазаруване", 850, DateTime.Today.AddDays(1)));
-            Expenses.Add(new ExpenseModel(3, "Храна и напитки", "Храна", 300, DateTime.Today.AddDays(2)));
+            var parameter = new Dictionary<string, object>
+            {
+                { nameof(SaveExpenseViewModel.TripId), TripId }
+            };
 
-            TotalExpenses = Expenses.Sum(e => e.Amount);
+            await Shell.Current.GoToAsync(nameof(SaveExpensePage), parameter);
+        }
 
-            await Shell.Current.GoToAsync(nameof(SaveExpensePage));
+        [RelayCommand]
+        private async Task EditTripAsync()
+        {
+            var parameter = new Dictionary<string, object>
+            {
+                { nameof(SaveTripViewModel.TripId), TripId }
+            };
+            await Shell.Current.GoToAsync(nameof(SaveTripPage), parameter);
+        }
+
+        private async Task FetchTripDetailsAsync()
+        {
+            // This method is called when TripId is set from the query parameter.
+            // You can use this to fetch trip details from an API or database if needed.
+            await MakeApiCall(async () =>
+            {
+                var result = await _tripsApi.GetTripDetailsAsync(TripId);
+
+                if (!result.IsSuccess)
+                {
+                    await ErrorAlertAsync(result.Error!);
+                    return;
+                }
+
+                (TripInfo, Expenses) = result.Data;
+            });
         }
     }
 }

@@ -48,6 +48,7 @@ namespace TravelExpenseTracker.Api.Services
                 return ApiResult<string>.Fail("Невалиден потребител.");
 
             var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+
             if (passwordVerificationResult == PasswordVerificationResult.Failed)
                 return ApiResult<string>.Fail("Невалидена парола.");
 

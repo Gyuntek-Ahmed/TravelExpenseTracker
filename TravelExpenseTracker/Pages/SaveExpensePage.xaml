@@ -6,6 +6,7 @@
              xmlns:dx="http://schemas.devexpress.com/maui"
              xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
              xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             xmlns:dto="clr-namespace:TravelExpenseTracker.Shared.DTOs;assembly=TravelExpenseTracker.Shared"
              BackgroundColor="{dx:ThemeColor Surface}"
              x:DataType="vm:SaveExpenseViewModel">
 
@@ -36,22 +37,34 @@
                           Orientation="Vertical">
             <Label Text="Разход за" />
             <dx:TextEdit PlaceholderText="Наименование на разхода"
+                         Text="{Binding Model.Title}"
                          PlaceholderColor="LightGray"/>
 
             <Label Text="Размер" />
             <dx:TextEdit PlaceholderText="Размер на разхода"
+                         Keyboard="Numeric"
+                         Text="{Binding Model.Amount}"
                          PlaceholderColor="LightGray"/>
 
-            <dx:DateEdit LabelText="Дата" />
+            <dx:DateEdit LabelText="Дата"
+                         Date="{Binding Model.SpentOn}"/>
 
             <Label Text="Категория" />
-            <dx:TextEdit PlaceholderText="Категория разходи"
-                         PlaceholderColor="LightGray"/>
+
+            <Picker ItemsSource="{Binding CategoryNames}"
+                                   SelectedItem="{Binding Model.SelectedCategoryName}"
+                                   Title="Категория разходи"/>
 
             <dx:DXButton Content="Запази разход"
+                         Command="{Binding SaveExpenseCommand}"
                          WidthRequest="170"
                          HeightRequest="70"
                          FontSize="18"/>
         </dx:DXStackLayout>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           Color="{dx:ThemeColor Primary}"
+                           Grid.RowSpan="2"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>

@@ -28,8 +28,7 @@ namespace TravelExpenseTracker.Api.Controllers
             => await _tripsService.GetUserTripsAsync(UserId, count);
 
         [HttpGet("{tripId:int}")] // URL: GET /api/trips/tripId  e.g. /api/trips/5
-        public async Task<ApiResult<TripDetailsDto>> GetTripDetails(int tripId)
-            => await _tripsService.GetTripDetailsAsync(tripId, UserId);
-
+        public async Task<ApiResult<TripDetailsDto>> GetTripDetails(int tripId, bool includeExpenses = true)
+            => await _tripsService.GetTripDetailsAsync(tripId, UserId, includeExpenses);
     }
 }

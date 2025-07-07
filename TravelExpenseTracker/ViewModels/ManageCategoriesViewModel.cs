@@ -1,30 +1,36 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using TravelExpenseTracker.APIs;
 using TravelExpenseTracker.Models;
+using TravelExpenseTracker.Shared.DTOs;
 
 namespace TravelExpenseTracker.ViewModels
 {
-    public partial class ManageCategoriesViewModel : ObservableObject
+    public partial class ManageCategoriesViewModel : BaseViewModel
     {
-        public ObservableCollection<ManageCategoryModel> Categories { get; set; } = [];
+        private readonly IExpensesApi _expensesApi;
+        public ObservableCollection<ExpenseCategoryDto> Categories { get; set; } = [];
 
-        public ManageCategoriesViewModel()
+        public ManageCategoriesViewModel(IExpensesApi expensesApi)
         {
-            ManageCategoryModel[] tempExpenseCategories = [
-                new (1, "Билети"),
-                new (2, "Пазаруване"),
-                new (3, "Храни"),
-                new (4, "Горива"),
-                new (5, "Други")
-            ];
+            _expensesApi = expensesApi;
+        }
 
-            foreach (var category in tempExpenseCategories)
+        public async Task FetchCategoriesAsync()
+        {
+            Categories.Clear();
+
+            await MakeApiCall(async () =>
             {
-                Categories.Add(category);
-            }
+                var categories = await _expensesApi.GetExpenseCategoriesAsync();
+
+                foreach (var category in categories)
+                {
+                    Categories.Add(category);
+                }
+            });
         }
 
         [RelayCommand]
@@ -40,12 +46,24 @@ namespace TravelExpenseTracker.ViewModels
 
             if (!string.IsNullOrWhiteSpace(newCategoryName))
             {
-                var newCategory = new ManageCategoryModel(Categories.Count + 1, newCategoryName);
-                Categories.Add(newCategory);
+                await MakeApiCall(async () =>
+                {
+                    var dto = new ExpenseCategoryDto { Name = newCategoryName };
+                    var result = await _expensesApi.SaveExpenseCategoryAsync(dto);
+
+                    if (!result.IsSuccess)
+                    {
+                        await ErrorAlertAsync(result.Error ?? "Неуспешно добавяне на категория.");
+                        return;
+                    }
+
+                    Categories.Add(dto);
+                    await ToastAsync("Категорията е добавена успешно.");
+                });
                 return;
             }
 
-            await Toast.Make("Моля, въведете валидно име на категория.", ToastDuration.Short).Show();
+            await ToastAsync("Моля, въведете валидно име на категория.");
         }
     }
 }

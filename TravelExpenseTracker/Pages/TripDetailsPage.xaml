@@ -4,13 +4,15 @@
              x:Class="TravelExpenseTracker.Pages.TripDetailsPage"
              xmlns:dx="http://schemas.devexpress.com/maui"
              xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
+             xmlns:dto="clr-namespace:TravelExpenseTracker.Shared.DTOs;assembly=TravelExpenseTracker.Shared"
              xmlns:model="clr-namespace:TravelExpenseTracker.Models"
              BackgroundColor="{dx:ThemeColor Surface}"
              x:DataType="vm:TripDetailsViewModel"
              Title="{Binding TripInfo.Title}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="pen_alt.png" />
+        <ToolbarItem IconImageSource="pen_alt.png"
+                     Command="{Binding EditTripCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="200, Auto, Auto, *"
@@ -32,14 +34,14 @@
                        Text="{Binding TripInfo.Title}"
                        FontSize="20"/>
                     <dx:DXBorder Grid.Column="1"
-                             BackgroundColor="Green"
+                             BackgroundColor="{Binding TripInfo.Status, Converter={StaticResource tripStatusToColor}}"
                              CornerRadius="10"
                              BorderThickness="0"
                              Padding="10,2"
-                             HeightRequest="20">
+                             HeightRequest="25">
                         <Label Text="{Binding TripInfo.Status}"
                            TextColor="White"
-                           FontSize="10"/>
+                           FontSize="14"/>
                     </dx:DXBorder>
                 </Grid>
                 <dx:DXStackLayout Orientation="Horizontal"
@@ -94,8 +96,8 @@
                        Text="Разходи"
                        FontSize="20" />
             <dx:DXButton Grid.Column="1"
-                             FontSize="12"
-                             Command="{Binding AddExpenseTempCommand}"
+                             FontSize="14"
+                             Command="{Binding AddExpenseCommand}"
                              Content="+ Добави Разход" />
         </Grid>
         <CollectionView ItemsSource="{Binding Expenses}"
@@ -114,7 +116,7 @@
                 </dx:DXStackLayout>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:ExpenseModel">
+                <DataTemplate x:DataType="dto:ExpenseListDto">
                     <dx:DXBorder BackgroundColor="{dx:ThemeColor OnPrimary}"
                                  BorderThickness="0"
                                  CornerRadius="8"
@@ -132,7 +134,7 @@
                                     <dx:DXImage Source="calendar.png"
                                                 VerticalOptions="Center"
                                                 HeightRequest="18" />
-                                    <Label Text="{Binding SpendOn, StringFormat='{0:dd-MM-yy}'}"
+                                    <Label Text="{Binding SpentOn, StringFormat='{0:dd-MM-yy}'}"
                                            VerticalOptions="Center"/>
                                 </dx:DXStackLayout>
 
@@ -157,5 +159,10 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           Color="{dx:ThemeColor Primary}"
+                           Grid.RowSpan="4"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>

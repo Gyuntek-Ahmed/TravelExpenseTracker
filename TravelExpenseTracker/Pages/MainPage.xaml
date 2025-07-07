@@ -5,6 +5,7 @@
              x:Class="TravelExpenseTracker.Pages.MainPage"
              xmlns:vm="clr-namespace:TravelExpenseTracker.ViewModels"
              xmlns:model="clr-namespace:TravelExpenseTracker.Models"
+             xmlns:dto="clr-namespace:TravelExpenseTracker.Shared.DTOs;assembly=TravelExpenseTracker.Shared"
              BackgroundColor="{dx:ThemeColor Surface}"
              Title="Управление На Пътни Разходи"
              x:DataType="vm:HomeViewModel">
@@ -26,8 +27,10 @@
                    Text="Последни пътувания" />
             <dx:DXButton Grid.Column="2"
                          Style="{StaticResource btnSm}"
+                         FontSize="14"
+                         HeightRequest="40"
                          Content="+  Добави Пътуване"
-                         Command="{Binding AddTripTempCommand}"
+                         Command="{Binding AddTripCommand}"
                          VerticalOptions="Start"/>
         </Grid>
 
@@ -45,10 +48,10 @@
                     <dx:DXButton Grid.Column="2"
                                  WidthRequest="200"
                                  HeightRequest="50"
-                                 FontSize="15"
+                                 FontSize="20"
                                  Style="{StaticResource btnSm}"
                                  Content="+  Добави Пътуване"
-                                 Command="{Binding AddTripTempCommand}"
+                                 Command="{Binding AddTripCommand}"
                                  VerticalOptions="Start"
                                  HorizontalOptions="Center"/>
                 </VerticalStackLayout>
@@ -60,7 +63,7 @@
                                  HorizontalItemSpacing="15"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:TripModel">
+                <DataTemplate x:DataType="dto:TripListDto">
                     <dx:DXBorder BackgroundColor="{dx:ThemeColor Surface}"
                                  BorderThickness="0"
                                  CornerRadius="15">
@@ -77,12 +80,18 @@
                         <dx:DXBorder.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}},
                                                   Path=GoToTripDetailsPageCommand}"
-                                                  CommandParameter="{Binding ID}"/>
+                                                  CommandParameter="{Binding Id}"/>
                         </dx:DXBorder.GestureRecognizers>
                     </dx:DXBorder>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           Color="{dx:ThemeColor Primary}"
+                           Grid.RowSpan="2"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
     </Grid>
 
 </ContentPage>

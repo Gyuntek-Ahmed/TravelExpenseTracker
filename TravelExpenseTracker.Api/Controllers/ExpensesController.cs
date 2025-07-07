@@ -23,7 +23,7 @@ namespace TravelExpenseTracker.Api.Controllers
         public async Task<ApiResult> SaveExpenseCategory(ExpenseCategoryDto dto)
             => await _expensesService.SaveExpenseCategoryAsync(dto, UserId);
 
-        [HttpPost("of-trip/{tripId:int}/save")] // URL: POST /api/trips/expenses/of-trip/{tripId}/save
+        [HttpPost("trip/{tripId:int}/save")] // URL: POST /api/trips/expenses/of-trip/{tripId}/save
         public async Task<ApiResult> SaveTripExpense(int tripId, ExpenseDto dto)
             => await _expensesService.SaveTripExpenseAsync(tripId, dto, UserId);
 

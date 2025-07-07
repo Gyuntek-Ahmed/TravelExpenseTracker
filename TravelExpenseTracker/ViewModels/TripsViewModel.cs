@@ -1,28 +1,46 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using TravelExpenseTracker.Models;
+using TravelExpenseTracker.APIs;
 using TravelExpenseTracker.Pages;
+using TravelExpenseTracker.Shared.DTOs;
 
 namespace TravelExpenseTracker.ViewModels
 {
-    public partial class TripsViewModel : ObservableObject
+    public partial class TripsViewModel : BaseViewModel
     {
-        public ObservableCollection<TripModel> Trips { get; set; } = [];
+        private readonly ITripsApi _tripsApi;
+
+        public TripsViewModel(ITripsApi tripsApi)
+        {
+            _tripsApi = tripsApi;
+        }
+
+        [ObservableProperty]
+        private TripListDto[] _trips = [];
 
         [RelayCommand]
-        private void AddTripTemp()
+        private async Task AddTripAsync()
         {
-            Trips.Add(new TripModel(1, "logo.png", "Trip to Paris", "Paris, France"));
-            Trips.Add(new TripModel(2, "trip_image.png", "Trip to Tokyo", "Tokyo, Japan"));
-            Trips.Add(new TripModel(3, "logo.png", "Trip to New York", "New York, USA"));
-            Trips.Add(new TripModel(4, "logo.png", "Trip to Sydney", "Sydney, Australia"));
+            await Shell.Current.GoToAsync($"//{nameof(SaveTripPage)}");
+        }
+
+        public async Task FetchTripsAsync()
+        {
+            await MakeApiCall(async () =>
+            {
+                Trips = await _tripsApi.GetUserTripsAsync(1000);
+            });
         }
 
         [RelayCommand]
         private async Task GoToTripDetailsPageAsync(int tripId)
         {
-            await Shell.Current.GoToAsync(nameof(TripDetailsPage));
+            var parameter = new Dictionary<string, object>
+            {
+                { nameof(TripDetailsViewModel.TripId), tripId }
+            };
+
+            await Shell.Current.GoToAsync(nameof(TripDetailsPage), parameter);
         }
     }
 }

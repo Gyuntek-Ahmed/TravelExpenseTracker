@@ -1,10 +1,13 @@
-﻿namespace TravelExpenseTracker
+﻿using TravelExpenseTracker.Services;
+
+namespace TravelExpenseTracker
 {
     public partial class App : Application
     {
-        public App()
+        public App(AuthService authService)
         {
             InitializeComponent();
+            authService.Initialize();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

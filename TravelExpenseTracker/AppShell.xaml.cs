@@ -12,6 +12,7 @@ namespace TravelExpenseTracker
             Routing.RegisterRoute(nameof(ManageCategoriesPage), typeof(ManageCategoriesPage));
             Routing.RegisterRoute(nameof(TripDetailsPage), typeof(TripDetailsPage));
             Routing.RegisterRoute(nameof(SaveExpensePage), typeof(SaveExpensePage));
+            Routing.RegisterRoute(nameof(SaveTripPage), typeof(SaveTripPage));
         }
     }
 }
